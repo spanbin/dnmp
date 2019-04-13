@@ -22,6 +22,7 @@ services:
         PHP_XDEBUG: ${PHP72_XDEBUG}
         PHP_SWOOLE: ${PHP72_SWOOLE}
         PHP_REDIS: ${PHP72_REDIS}
+        PHP_OCI8: ${PHP72_OCI8}
         REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
@@ -115,6 +116,14 @@ services:
     environment:
       - REDIS_1_HOST=redis
       - REDIS_1_PORT=6379
+
+  memcached:
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+    restart: always  
+    networks:
+      - default
 
 networks:
   default:

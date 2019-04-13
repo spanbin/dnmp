@@ -8,6 +8,8 @@ echo '<li>PHP版本：', PHP_VERSION, '</li>';
 echo '<li>Nginx版本：', $_SERVER['SERVER_SOFTWARE'], '</li>';
 echo '<li>MySQL服务器版本：', getMysqlVersion(), '</li>';
 echo '<li>Redis服务器版本：', getRedisVersion(), '</li>';
+echo '<li>Memcache服务器版本：', getMemcacheVersion(), '</li>';
+echo '<li>Memcached服务器版本：', getMemcachedVersion(), '</li>';
 echo '</ul>';
 
 echo '<h2>已安装扩展</h2>';
@@ -65,3 +67,36 @@ function printExtensions()
     echo '</ol>';
 }
 
+/**
+ * 获取memcache
+ */
+function getMemcacheVersion(){
+    if (extension_loaded('memcache')) {
+        try {
+            $memcache = new Memcache();
+            $memcache->connect('memcached', 11211);
+            return $memcache->getVersion();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    } else {
+        return 'Memcache 扩展未安装 ×';
+    }
+}
+
+/**
+ * 获取memcached
+ */
+function getMemcachedVersion(){
+    if (extension_loaded('memcached')) {
+        try {
+            $memcached = new Memcached();
+            $memcached->addServer('memcached', 11211);
+            return json_encode($memcached->getVersion());
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    } else {
+        return 'Memcached 扩展未安装 ×';
+    }
+}

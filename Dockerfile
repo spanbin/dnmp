@@ -4,6 +4,7 @@ FROM php:${PHP_VERSION}-fpm
 ARG PHP_XDEBUG
 ARG PHP_SWOOLE
 ARG PHP_REDIS
+ARG PHP_OCI8
 ARG REPLACE_SOURCE_LIST
 
 COPY ./sources.list /etc/apt/sources.list.tmp
@@ -37,7 +38,7 @@ RUN apt install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-install $mc pdo_mysql \
     && docker-php-ext-install $mc mysqli \
     && docker-php-ext-install $mc mbstring \
-    && docker-php-ext-install $mc exif
+    && docker-php-ext-install $mc exif \
 #    && docker-php-ext-install $mc bcmath \
 #    && docker-php-ext-install $mc calendar \
 #    && docker-php-ext-install $mc sockets \
