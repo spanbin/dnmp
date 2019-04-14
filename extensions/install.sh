@@ -101,7 +101,8 @@ fi
 
 # sqlsrv pdo_sqlsrv require PHP version 7.0 or later.
 if [ ${version} -gt 70000  ]; then
-   apt install -y unixodbc-dev \
+   apt install -y unixodbc unixodbc-dev \
+   && echo 'yes' | dpkg -i msodbcsql17_17.3.1.1-1_amd64.deb \
    && pecl install sqlsrv pdo_sqlsrv \
    && docker-php-ext-enable sqlsrv pdo_sqlsrv
 fi
